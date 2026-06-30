@@ -13,4 +13,7 @@ export type AssemblyRecord = {
   is_active: boolean;
   photo_path: string | null;
   photo_url: string | null;
+  latitude: number | string | null;
+longitude: number | string | null;
+google_maps_url: string | null;
 };

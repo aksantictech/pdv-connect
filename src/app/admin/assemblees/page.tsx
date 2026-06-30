@@ -20,7 +20,11 @@ export default async function AssembliesPage() {
       pastor_name,
       timezone,
       is_active,
+      latitude,
+longitude,
+google_maps_url,
       photo_path
+      
     `)
     .order("created_at", { ascending: true });
 

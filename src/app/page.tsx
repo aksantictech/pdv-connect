@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import PublicNewsSection from "../components/public/PublicNewsSection";
+import PublicGalleryPreview from "../components/public/PublicGalleryPreview";
 import {
 ArrowRight,
 BookOpen,
@@ -15,6 +17,7 @@ PlayCircle,
 Quote,
 Users,
 } from "lucide-react";
+export const dynamic = "force-dynamic";
 
 const churchEmail = process.env.NEXT_PUBLIC_CHURCH_CONTACT_EMAIL ?? "";
 const churchPhone = process.env.NEXT_PUBLIC_CHURCH_PHONE ?? "";
@@ -111,7 +114,7 @@ return ( <main className="overflow-hidden bg-[#f7faff] text-[#092e63]"> <section
           </Link>
 
           <a
-            href="#cultes"
+            href="https://www.youtube.com/@CEFLAPAROLEDEVIE"
             className="inline-flex items-center gap-2 rounded-2xl border border-white/30 bg-white/10 px-6 py-4 text-sm font-extrabold text-white backdrop-blur transition hover:bg-white/20"
           >
             <PlayCircle size={19} />
@@ -250,59 +253,14 @@ return ( <main className="overflow-hidden bg-[#f7faff] text-[#092e63]"> <section
     </div>
   </section>
 
-  <section id="cultes" className="mx-auto max-w-7xl px-6 pb-20 lg:px-10">
-    <div className="mb-8">
-      <p className="text-sm font-black uppercase tracking-[0.16em] text-[#1680c4]">
-        Galerie
-      </p>
+  <PublicGalleryPreview />
 
-      <h2 className="mt-3 text-4xl font-black text-[#092e63]">
-        Moments de culte
-      </h2>
-    </div>
+<PublicNewsSection />
+  
 
-    <div className="grid gap-5 lg:grid-cols-[1.5fr_0.75fr]">
-      <div className="relative min-h-[420px] overflow-hidden rounded-[2rem]">
-        <Image
-          src="/images/culte-assemblee.jpeg"
-          alt="Assemblée de CEF Parole de Vie"
-          fill
-          className="object-cover"
-        />
 
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#031b42]/90 to-transparent p-8 pt-24">
-          <p className="text-2xl font-black text-white">
-            Célébration, louange et communion fraternelle
-          </p>
-        </div>
-      </div>
+<section className="bg-[#06295e]">
 
-      <div className="grid gap-5">
-        <div className="relative min-h-[200px] overflow-hidden rounded-[2rem]">
-          <Image
-            src="/images/louange-pdv.jpeg"
-            alt="Temps de louange à Parole de Vie"
-            fill
-            className="object-cover"
-          />
-        </div>
-
-        <div className="rounded-[2rem] bg-[#0a3d82] p-8 text-white">
-          <Quote size={34} className="text-[#4cbdfd]" />
-
-          <p className="mt-6 text-2xl font-black leading-9">
-            Une église, une famille, une destinée.
-          </p>
-
-          <p className="mt-4 text-sm text-blue-100">
-            Grandir • Servir • Impacter
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section className="bg-[#06295e]">
     <div className="mx-auto grid max-w-7xl gap-7 px-6 py-12 text-white md:grid-cols-2 lg:grid-cols-5 lg:px-10">
       <div>
         <p className="text-xl font-black">Infos pratiques</p>
@@ -396,6 +354,7 @@ return ( <main className="overflow-hidden bg-[#f7faff] text-[#092e63]"> <section
       </div>
     </div>
   </footer>
+  
 </main>
 
 );

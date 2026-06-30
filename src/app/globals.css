@@ -211,3 +211,16 @@ animation: softPulse 3s ease-in-out infinite;
 .spin-slow {
 animation: spinSlow 18s linear infinite;
 }
+@keyframes pdv-logo-breath {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+
+  50% {
+    transform: scale(1.06) rotate(1.5deg);
+  }
+}
+
+.animate-pdv-logo-breath {
+  animation: pdv-logo-breath 3.5s ease-in-out infinite;
+}
