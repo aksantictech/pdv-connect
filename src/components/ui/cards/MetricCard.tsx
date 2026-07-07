@@ -13,6 +13,8 @@ type MetricCardProps = {
   trendLabel?: string;
   href?: string;
   tone?: MetricTone;
+  subtitle?: string;
+  badge?: string;
 };
 
 const tones: Record<MetricTone, string> = {
@@ -32,11 +34,15 @@ export default function MetricCard({
   trendLabel,
   href,
   tone = "blue",
+  subtitle,
+  badge,
 }: MetricCardProps) {
   return (
     <Card className="transition hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-950/10">
       <div className="flex items-start justify-between gap-4">
-        <div className={`flex h-14 w-14 items-center justify-center rounded-2xl ${tones[tone]}`}>
+        <div
+          className={`flex h-14 w-14 items-center justify-center rounded-2xl ${tones[tone]}`}
+        >
           <Icon size={26} />
         </div>
 
@@ -49,7 +55,21 @@ export default function MetricCard({
 
       <p className="mt-7 text-4xl font-black text-[#092e63]">{value}</p>
 
-      <h2 className="mt-2 text-lg font-extrabold text-slate-900">{title}</h2>
+      {subtitle && (
+        <p className="mt-1 text-sm font-bold text-emerald-600">
+          {subtitle}
+        </p>
+      )}
+
+      {badge && (
+        <span className="mt-3 inline-flex rounded-full bg-blue-100 px-3 py-1 text-xs font-bold text-[#0a3d82]">
+          {badge}
+        </span>
+      )}
+
+      <h2 className="mt-3 text-lg font-extrabold text-slate-900">
+        {title}
+      </h2>
 
       {description && (
         <p className="mt-3 text-sm leading-6 text-slate-500">
@@ -58,7 +78,9 @@ export default function MetricCard({
       )}
 
       {trendLabel && (
-        <p className="mt-4 text-xs font-bold text-slate-400">{trendLabel}</p>
+        <p className="mt-4 text-xs font-bold text-slate-400">
+          {trendLabel}
+        </p>
       )}
 
       {href && (

@@ -4,3 +4,4 @@ export { default as DashboardTimeline } from "./DashboardTimeline";
 export { default as DashboardWidget } from "./DashboardWidget";
 export { default as DashboardQuickActions } from "./DashboardQuickActions";
 export { default as DashboardNotifications } from "./DashboardNotifications";
+export { default as DashboardRecentActivity } from "./DashboardRecentActivity";

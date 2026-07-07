@@ -5,45 +5,37 @@ import {
   HeartHandshake,
   Package,
   Users,
+  
 } from "lucide-react";
 
-import MetricCard from "@/components/ui/cards/MetricCard";
-import Section from "@/components/ui/layout/Section";
-import { getDashboardData } from "@/services/dashboard";
+import MembersGrowthChart from "@/components/dashboard/charts/MembersGrowthChart";
 import {
   DashboardGrid,
   DashboardHero,
-  DashboardQuickActions,
   DashboardNotifications,
+  DashboardQuickActions,
   DashboardTimeline,
   DashboardWidget,
+  DashboardRecentActivity,
 } from "@/components/dashboard";
-
-const timelineItems = [
-  {
-    time: "Aujourd’hui",
-    title: "Nouveaux membres à contacter",
-    description: "Les personnes inscrites récemment seront listées ici.",
-  },
-  {
-    time: "Cette semaine",
-    title: "Rapports à vérifier",
-    description: "Suivi des départements, activités et responsables.",
-  },
-  {
-    time: "À venir",
-    title: "Finances et patrimoine",
-    description: "Les alertes financières et maintenances apparaîtront ici.",
-  },
-];
+import MetricCard from "@/components/ui/cards/MetricCard";
+import Section from "@/components/ui/layout/Section";
+import { getDashboardData } from "@/services/dashboard";
 
 export default async function AdminDashboardPage() {
   const dashboard = await getDashboardData();
+
+  const timelineItems = dashboard.alerts.map((alert) => ({
+    time: "À suivre",
+    title: alert.title,
+    description: alert.description,
+  }));
 
   const metrics = [
     {
       title: "Membres",
       value: dashboard.stats.membersCount,
+      subtitle: `+${dashboard.stats.newMembersThisMonth} ce mois`,
       description: "Effectif global enregistré.",
       icon: Users,
       tone: "blue" as const,
@@ -52,6 +44,7 @@ export default async function AdminDashboardPage() {
     {
       title: "Nouveaux membres",
       value: dashboard.stats.newMembersCount,
+      subtitle: `${dashboard.stats.newMembersThisMonth} ce mois`,
       description: "Personnes à suivre et intégrer.",
       icon: HeartHandshake,
       tone: "green" as const,
@@ -60,14 +53,16 @@ export default async function AdminDashboardPage() {
     {
       title: "Élèves",
       value: dashboard.stats.studentsCount,
-      description: "Élèves inscrits dans les écoles.",
+      badge: `${dashboard.stats.schoolsCount} écoles`,
+      description: "Élèves inscrits.",
       icon: GraduationCap,
       tone: "violet" as const,
-      href: "/admin/ecole/eleves",
+      href: "/admin/ecole",
     },
     {
       title: "Activités",
       value: dashboard.stats.activitiesCount,
+      subtitle: `${dashboard.stats.activitiesThisWeek} cette semaine`,
       description: "Activités programmées.",
       icon: CalendarDays,
       tone: "orange" as const,
@@ -96,9 +91,7 @@ export default async function AdminDashboardPage() {
           title="Croissance du ministère"
           description="Évolution des membres, présences, assemblées et activités."
         >
-          <div className="flex h-72 items-center justify-center rounded-3xl bg-gradient-to-br from-blue-50 to-cyan-50 text-sm font-bold text-slate-500">
-            Graphique en préparation
-          </div>
+          <MembersGrowthChart data={dashboard.membersGrowth} />
         </DashboardWidget>
 
         <DashboardWidget
@@ -132,7 +125,13 @@ export default async function AdminDashboardPage() {
           title="Notifications intelligentes"
           description="Alertes importantes à surveiller."
         >
-          <DashboardNotifications />
+          <DashboardNotifications alerts={dashboard.alerts} />
+          <DashboardWidget
+  title="Dernières activités"
+  description="Résumé automatique des mouvements récents."
+>
+  <DashboardRecentActivity activities={dashboard.activities} />
+</DashboardWidget>
         </DashboardWidget>
 
         <DashboardWidget
@@ -140,14 +139,20 @@ export default async function AdminDashboardPage() {
           description="Finances, patrimoine et école."
         >
           <div className="grid gap-3 sm:grid-cols-3">
-            {["Finances", "Patrimoine", "École"].map((item) => (
+            {[
+              { label: "Finances", value: 0 },
+              { label: "Patrimoine", value: 0 },
+              { label: "École", value: dashboard.stats.studentsCount },
+            ].map((item) => (
               <div
-                key={item}
+                key={item.label}
                 className="rounded-2xl border border-blue-100 bg-blue-50/40 px-4 py-5 text-center"
               >
-                <p className="text-2xl font-black text-[#092e63]">0</p>
+                <p className="text-2xl font-black text-[#092e63]">
+                  {item.value}
+                </p>
                 <p className="mt-1 text-sm font-bold text-slate-600">
-                  {item}
+                  {item.label}
                 </p>
               </div>
             ))}

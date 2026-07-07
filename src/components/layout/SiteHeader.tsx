@@ -9,6 +9,7 @@ const discoverNavigation = [
   { label: "Notre vision", href: "/vision" },
   { label: "Nos assemblées", href: "/assemblees" },
   { label: "Ministères", href: "/ministeres" },
+  { label: "Notre histoire", href: "/historique" },
 ];
 
 const churchLifeNavigation = [
